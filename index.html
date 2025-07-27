@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Budget Tracker</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
   <div class="container">
@@ -12,7 +12,7 @@
 
     <form id="budget-form">
       <input type="text" id="description" placeholder="Description" required />
-      <input type="number" id="amount" placeholder="Amount" required />
+      <input type="number" id="amount" placeholder="Amount" required step="0.01" />
       <select id="category">
         <option>Groceries</option>
         <option>Cats</option>
