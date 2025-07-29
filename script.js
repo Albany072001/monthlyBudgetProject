@@ -49,6 +49,9 @@ function updateTable() {
       </td>
     `;
     tableBody.appendChild(row);
+
+    // this is to save transactions to localStorage using Json
+    localStorage.setItem('budgetTransactions', JSON.stringify(transactions)); 
   });
 
   // Delete buttons
@@ -96,3 +99,13 @@ function resetForm() {
   form.querySelector('button[type="submit"]').textContent = 'Add';
   form.reset();
 }
+
+// Load data from localStorage on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('budgetTransactions');
+  if (saved) {
+    transactions = JSON.parse(saved);
+    updateTable();
+    updateSummary();
+  }
+});
