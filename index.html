@@ -14,20 +14,21 @@
       <input type="text" id="description" placeholder="Description" required />
       <input type="number" id="amount" placeholder="Amount" required step="0.01" />
       <select id="category">
-        <option>Income</option>
-        <option>Housing</option>
-        <option>Transportation</option>
-        <option>Food</option>
-        <option>Utilities</option>
-        <option>Clothing</option>
-        <option>Medical/Healthcare</option>
-        <option>Insurance</option>
-        <option>Household items/Supplies</option>
-        <option>Personal</option>
-        <option>Debt</option>
-        <option>Education</option>
-        <option>Gifts/donations</option>
-        <option>Entertainment</option>
+        <option>Income</option> <!--Salaries-->
+        <option>Housing</option> <!--Mortgage or rent, Propety Taxes, Household repairs, HOA fees-->
+        <option>Transportation</option> <!--Car payment, car warranty, gas, tires, maintance and oil changes, parking fees, repairs, registration and DMV fees-->
+        <option>Food</option> <!--Groceries, restaurants, pet food-->
+        <option>Utilities</option> <!--Electricity, water, garbage, phones, cable, internet-->
+        <option>Clothing</option> <!--Adult's clothing, Adult's shoes, Children's clothing, children's shoes-->
+        <option>Medical/Healthcare</option> <!--Primary car, dental carew, specialty care, urgent care, medications, medical devices-->
+        <option>Insurance</option> <!--Health insurance, homeowner's or rental's insurance, auto insurance, life insurance, disabilty insurance-->
+        <option>Household items/Supplies</option> <!--Toiletries, laundry detergent, diswasher detergent, tools-->
+        <option>Personal</option> <!--Gym memberships, Haircuts, salon services, cosmetics, babysitter, subcriptions-->
+        <option>Debt</option> <!--Peronal loans, student loans, credit cards-->
+        <option>Education</option> <!--Your college, school supplies, books-->
+        <option>Gifts/donations</option> <!--Birthday, annivesary, wedding, christmas, special occasion, charities-->
+        <option>Entertainment</option><!--Alcohol and/or bars, games, movies, concerts, vacations subcriptions (Amazon, spofity, hulu etc)-->
+        <option>Savings</option> <!--Emergency fund, Big purchases, other savings-->
       </select>
       <button type="submit">Add</button>
     </form>
@@ -38,16 +39,20 @@
       <p><strong>Net Savings:</strong> $<span id="net-savings">0</span></p>
     </div>
 
+   <h2>Fixed Expenses</h2>
     <table>
       <thead>
-        <tr>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Category</th>
-          <th>Actions</th> <!--Required for Edit/Delete buttons-->
-        </tr>
+        <tr><th>Description</th><th>Amount</th><th>Category</th><th>Actions</th></tr>
       </thead>
-      <tbody id="budget-table-body"></tbody>
+      <tbody id="fixed-table-body"></tbody>
+    </table>
+
+    <h2>Variable Expenses</h2>
+    <table>
+      <thead>
+        <tr><th>Description</th><th>Amount</th><th>Category</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="variable-table-body"></tbody>
     </table>
   </div>
 
