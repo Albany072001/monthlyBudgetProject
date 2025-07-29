@@ -1,11 +1,11 @@
 let editIndex = -1;
 
-const form = document.getElementById('budget-form');
-const fixedBody = document.getElementById('fixed-table-body');
-const variableBody = document.getElementById('variable-table-body');
-const totalIncomeDisplay = document.getElementById('total-income');
-const totalExpenseDisplay = document.getElementById('total-expense');
-const netSavingsDisplay = document.getElementById('net-savings');
+let form = document.getElementById('budget-form');
+let fixedBody = document.getElementById('fixed-table-body');
+let variableBody = document.getElementById('variable-table-body');
+let totalIncomeDisplay = document.getElementById('total-income');
+let totalExpenseDisplay = document.getElementById('total-expense');
+let netSavingsDisplay = document.getElementById('net-savings');
 
 let transactions = [];
 
@@ -20,18 +20,18 @@ function isFixedExpense(transaction) {
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const description = document.getElementById('description').value.trim();
-  const amountInput = parseFloat(document.getElementById('amount').value);
-  const category = document.getElementById('category').value;
+  let description = document.getElementById('description').value.trim();
+  let amountInput = parseFloat(document.getElementById('amount').value);
+  let category = document.getElementById('category').value;
 
   if (!description || isNaN(amountInput) || amountInput <= 0) return;
 
   // Income is positive, expenses are negative
-  const amount = category === 'Income' ? amountInput : -amountInput;
+  let amount = category === 'Income' ? amountInput : -amountInput;
 
   if (editIndex === -1) {
     // Check if similar transaction exists (same description + category)
-    const existingIndex = transactions.findIndex(t =>
+    let existingIndex = transactions.findIndex(t =>
       t.description.toLowerCase() === description.toLowerCase() &&
       t.category.toLowerCase() === category.toLowerCase()
     );
@@ -53,12 +53,16 @@ form.addEventListener('submit', function (e) {
   form.reset();
 });
 
+// Income section
+let incomeBody = document.getElementById('income-table-body');
+
 function updateTable() {
   fixedBody.innerHTML = '';
   variableBody.innerHTML = '';
+  incomeBody.innerHTML = '';
 
   transactions.forEach((t, index) => {
-    const row = document.createElement('tr');
+    let row = document.createElement('tr');
     row.innerHTML = `
       <td>${t.description}</td>
       <td style="color:${t.amount >= 0 ? 'green' : 'red'}">$${Math.abs(t.amount).toFixed(2)}</td>
@@ -69,9 +73,11 @@ function updateTable() {
       </td>
     `;
 
-    if (isFixedExpense(t)) {
+    if (t.amount > 0) {
+      incomeBody.appendChild(row);
+    } else if (isFixedExpense(t)) {
       fixedBody.appendChild(row);
-    } else if (t.amount < 0) {
+    } else {
       variableBody.appendChild(row);
     }
   });
@@ -80,14 +86,15 @@ function updateTable() {
   addEditDeleteListeners();
 }
 
+
 function updateSummary() {
-  const income = transactions
+  let income = transactions
     .filter(t => t.amount > 0)
     .reduce((acc, t) => acc + t.amount, 0);
-  const expenses = transactions
+  let expenses = transactions
     .filter(t => t.amount < 0)
     .reduce((acc, t) => acc + t.amount, 0);
-  const net = income + expenses;
+  let net = income + expenses;
 
   totalIncomeDisplay.textContent = income.toFixed(2);
   totalExpenseDisplay.textContent = Math.abs(expenses).toFixed(2);
@@ -97,7 +104,7 @@ function updateSummary() {
 function addEditDeleteListeners() {
   document.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', e => {
-      const idx = e.target.dataset.index;
+      let idx = e.target.dataset.index;
       transactions.splice(idx, 1);
       updateTable();
       updateSummary();
@@ -107,14 +114,14 @@ function addEditDeleteListeners() {
 
   document.querySelectorAll('.edit-btn').forEach(btn => {
     btn.addEventListener('click', e => {
-      const idx = e.target.dataset.index;
+      let idx = e.target.dataset.index;
       populateFormForEdit(idx);
     });
   });
 }
 
 function populateFormForEdit(index) {
-  const t = transactions[index];
+  let t = transactions[index];
   document.getElementById('description').value = t.description;
   document.getElementById('amount').value = Math.abs(t.amount);
   document.getElementById('category').value = t.category;
@@ -130,7 +137,7 @@ function resetForm() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('budgetTransactions');
+  let saved = localStorage.getItem('budgetTransactions');
   if (saved) {
     transactions = JSON.parse(saved);
     updateTable();
