@@ -49,15 +49,15 @@ function updateTable() {
       </td>
     `;
     tableBody.appendChild(row);
-
-    // this is to save transactions to localStorage using Json
-    localStorage.setItem('budgetTransactions', JSON.stringify(transactions)); 
   });
+
+  // this is to save transactions to localStorage using Json
+  localStorage.setItem('budgetTransactions', JSON.stringify(transactions)); 
 
   // Delete buttons
   tableBody.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', e => {
-      const idx = e.target.dataset.index;
+      let idx = e.target.dataset.index;
       transactions.splice(idx, 1);
       updateTable();
       updateSummary();
@@ -68,14 +68,16 @@ function updateTable() {
   // Edit buttons
   tableBody.querySelectorAll('.edit-btn').forEach(btn => {
     btn.addEventListener('click', e => {
-      const idx = e.target.dataset.index;
+      let idx = e.target.dataset.index;
       populateFormForEdit(idx);
+      updateTable();
+      updateSummary();
     });
   });
 }
 
 function populateFormForEdit(index) {
-  const t = transactions[index];
+  let t = transactions[index];
   document.getElementById('description').value = t.description;
   document.getElementById('amount').value = Math.abs(t.amount);
   document.getElementById('category').value = t.category;
@@ -102,7 +104,7 @@ function resetForm() {
 
 // Load data from localStorage on page load
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('budgetTransactions');
+  let saved = localStorage.getItem('budgetTransactions');
   if (saved) {
     transactions = JSON.parse(saved);
     updateTable();
